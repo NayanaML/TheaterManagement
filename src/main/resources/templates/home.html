@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Theater Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Theater List</h2>
+        <a th:href="@{/theater/new}" class="btn btn-primary mb-3">Add New Theater</a>
+        <a th:href="@{/auth/login}" th:if="${#httpServletRequest.remoteUser == null}">Login</a>
+<a th:href="@{/auth/register}" th:if="${#httpServletRequest.remoteUser == null}">Register</a>
+<a th:href="@{/logout}" th:if="${#httpServletRequest.remoteUser != null}">Logout</a>
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Booking</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="theater : ${theater}">
+                    <td th:text="${theater.id}"></td>
+                    <td th:text="${theater.name}"></td>
+                    <td th:text="${theater.booking}"></td>
+                    <td th:text="${theater.capacity}"></td>
+                    <td>
+                        <a th:href="@{/theater/edit/{id}(id=${theater.id})}" class="btn btn-warning">Edit</a>
+                        <a th:href="@{/theater/delete/{id}(id=${theater.id})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
